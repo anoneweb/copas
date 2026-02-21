@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Template PABX</title>
+    <title>Generator Template Laporan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 600px;
+            max-width: 650px;
             margin: 40px auto;
             padding: 20px;
             background-color: #f4f7f6;
@@ -19,13 +19,14 @@
         .form-group { display: flex; flex-direction: column; margin-bottom: 15px; }
         
         label { font-weight: bold; margin-bottom: 5px; color: #555; font-size: 14px; }
-        input[type="text"] {
+        select, input[type="text"], input[type="date"] {
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 16px;
             width: 100%;
             box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
         
         .button-group { display: flex; gap: 10px; margin-top: 10px; }
@@ -43,25 +44,43 @@
         .output-group { margin-top: 25px; }
         #hasilTeks { 
             width: 100%;
-            height: 280px; 
+            height: 380px; 
             background-color: #fff; 
             font-family: monospace; 
             font-size: 14px; 
-            padding: 10px;
+            padding: 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
             resize: vertical;
+            line-height: 1.5;
         }
     </style>
 </head>
-<body>
+<body onload="sesuaikanForm()">
 
-    <h2>Generator Template PABX</h2>
+    <h2>Generator Template Laporan</h2>
 
     <div class="form-group">
-        <label for="pabx">Masukkan Data PABX:</label>
-        <input type="text" id="pabx" placeholder="Ketik data PABX di sini...">
+        <label for="kategori">Pilih Kategori / Format:</label>
+        <select id="kategori" onchange="sesuaikanForm()">
+            <option value="template1">1. WSA TEKNIS / Kendala Internet</option>
+            <option value="template2">2. WSA NON TEKNIS / Percepatan Permintaan</option>
+            <option value="template3">3. GENERAL</option>
+            <option value="template4">4. NON WSA PROFILING / Edit SR</option>
+            <option value="template5">5. NON WSA BILLING</option>
+            <option value="template6">6. ITSD</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="inputPabx">Masukkan Data PABX:</label>
+        <input type="text" id="inputPabx" placeholder="Ketik data PABX di sini...">
+    </div>
+
+    <div class="form-group" id="grupTanggal">
+        <label for="inputTanggal">Pilih Tanggal Kejadian:</label>
+        <input type="date" id="inputTanggal">
     </div>
 
     <div class="button-group">
@@ -79,23 +98,57 @@
     </div>
 
     <script>
+        // Fungsi untuk mengatur tampilan form berdasarkan kategori
+        function sesuaikanForm() {
+            const kategori = document.getElementById('kategori').value;
+            const grupTanggal = document.getElementById('grupTanggal');
+            const inputPabx = document.getElementById('inputPabx');
+            const inputTanggal = document.getElementById('inputTanggal');
+
+            // Kosongkan input saat ganti kategori
+            inputPabx.value = '';
+            inputTanggal.value = '';
+            document.getElementById('hasilTeks').value = '';
+
+            // Template yang butuh tanggal: 2, 3, 5, 6
+            const butuhTanggal = ['template2', 'template3', 'template5', 'template6'];
+
+            if (butuhTanggal.includes(kategori)) {
+                grupTanggal.style.display = 'flex'; // Tampilkan pemilih tanggal
+            } else {
+                grupTanggal.style.display = 'none'; // Sembunyikan pemilih tanggal
+            }
+            
+            inputPabx.focus();
+        }
+
         function buatTemplate() {
-            // Mengambil nilai PABX
-            const pabx = document.getElementById('pabx').value;
+            const kategori = document.getElementById('kategori').value;
+            const pabx = document.getElementById('inputPabx').value;
+            const tanggalRaw = document.getElementById('inputTanggal').value;
 
             if(!pabx) {
                 alert("Harap isi data PABX terlebih dahulu!");
                 return;
             }
 
-            // Menyusun format, hanya PABX yang terisi sesuai input, sisanya statis
-            const template = `${pabx} / CASE
+            // Ubah format tanggal dari YYYY-MM-DD menjadi DD-MM-YYYY
+            let tanggalFormatted = "";
+            if (tanggalRaw) {
+                const parts = tanggalRaw.split('-');
+                tanggalFormatted = `${parts[2]}-${parts[1]}-${parts[0]}`;
+            }
+
+            let template = "";
+
+            if (kategori === 'template1') {
+                template = `${pabx} / CASE
 
 ${pabx} / NoIH / Case / HVC
 Nama Pelanggan : 
 CP : 
 Detail case : 
-Lapul/Gaul :  
+Lapul/Gaul : 
 Status Nomor di DSC : 
 Sub Status : 
 Status Pembayaran : 
@@ -103,17 +156,96 @@ Type ONT :
 Capt lightshoot : 
 KATEGORI : `;
 
-            // Menampilkan ke kotak hasil
+            } else if (kategori === 'template2') {
+                template = `${pabx} / CASE
+
+${pabx} / NoIH / Case / HVC
+Nama Pelanggan : 
+CP : 
+Email : 
+Detail case : 
+Tgl Kejadian : ${tanggalFormatted}
+Order ID permintaan : 
+Status Order : 
+Solusi yang diberikan : 
+Lapul/Gaul : 
+Capt lightshoot : 
+KATEGORI : `;
+
+            } else if (kategori === 'template3') {
+                template = `${pabx} / CASE
+
+${pabx} / NoIH / Case / HVC
+Nama Pelanggan : 
+CP : 
+Email : 
+OrderID : 
+Status order : 
+Detail case : 
+Tanggal kejadian : ${tanggalFormatted}
+Solusi yang diberikan : 
+Lapul / Gaul : 
+Capt lightshoot : 
+KATEGORI : 
+K-Kontak : `;
+
+            } else if (kategori === 'template4') {
+                template = `${pabx} / CASE
+
+${pabx} / NoIH / Case / HVC
+Nama Pelanggan : 
+NIK : 
+TTL : 
+CP : 
+Email : 
+Detail case : 
+Solusi yang diberikan : 
+Capt lightshoot : 
+KATEGORI : `;
+
+            } else if (kategori === 'template5') {
+                template = `${pabx} / CASE
+
+${pabx} / NoIH / Case / HVC
+Nama Pelanggan : 
+CP : 
+Email : 
+Detail case : 
+Order ID permintaan : 
+FA ID : 
+Tanggal kejadian : ${tanggalFormatted}
+Solusi yang diberikan : 
+Lapul/Gaul : 
+Status Nomor di DSC : 
+Sub Status : 
+Status Pembayaran : 
+Capt lightshoot FA : 
+KATEGORI : `;
+
+            } else if (kategori === 'template6') {
+                template = `${pabx} / CASE
+
+${pabx} / NoIH / Case / HVC
+Nomor IndiHome / Nomor Internet : 
+Nama Pelanggan : 
+NIK Pelanggan : 
+No. HP Pelanggan : 
+Email Pelanggan : 
+Order ID : 
+Tanggal Kejadian: ${tanggalFormatted}
+Kendala/inti gangguan : 
+Capture Error : 
+Dear rekan IT Service Desk mohon bantu`;
+            }
+
             document.getElementById('hasilTeks').value = template;
         }
 
         function clearForm() {
-            // Mengosongkan input PABX dan kotak hasil
-            document.getElementById('pabx').value = '';
+            document.getElementById('inputPabx').value = '';
+            document.getElementById('inputTanggal').value = '';
             document.getElementById('hasilTeks').value = '';
-            
-            // Kembalikan kursor ke input PABX agar siap mengetik lagi
-            document.getElementById('pabx').focus();
+            document.getElementById('inputPabx').focus();
         }
 
         function copyTeks() {
@@ -123,7 +255,7 @@ KATEGORI : `;
                 return;
             }
             teks.select();
-            teks.setSelectionRange(0, 99999); // Kompatibilitas untuk layar HP
+            teks.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(teks.value)
                 .then(() => alert("Teks berhasil disalin!"))
                 .catch(err => alert("Gagal menyalin teks."));
