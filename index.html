@@ -3,101 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Template Laporan</title>
+    <title>Generator Template Laporan Modern</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 650px;
-            margin: 40px auto;
-            padding: 20px;
-            background-color: #f4f7f6;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        h2 { text-align: center; color: #333; margin-bottom: 20px; }
-        
-        .form-group { display: flex; flex-direction: column; margin-bottom: 15px; }
-        
-        label { font-weight: bold; margin-bottom: 5px; color: #555; font-size: 14px; }
-        select, input[type="text"], input[type="date"] {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-            width: 100%;
+        /* --- Reset & Typography Dasar --- */
+        * {
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+        }
+        body {
+            /* Menggunakan font system yang lebih modern */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            /* Latar belakang gradasi modern */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- Container Utama (Kartu) --- */
+        .main-card {
+            width: 100%;
+            max-width: 700px;
+            /* Efek kartu putih agak transparan (Glassmorphism subtle) */
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        h2 { 
+            text-align: center; 
+            color: #333; 
+            margin-bottom: 25px; 
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
         
-        .button-group { display: flex; gap: 10px; margin-top: 10px; }
-        button {
-            flex: 1; padding: 12px; color: white; border: none;
-            border-radius: 4px; font-size: 16px; cursor: pointer; font-weight: bold;
+        /* --- Form Styles --- */
+        .form-group { 
+            display: flex; 
+            flex-direction: column; 
+            margin-bottom: 20px; 
         }
-        .btn-generate { background-color: #28a745; }
-        .btn-generate:hover { background-color: #218838; }
-        .btn-clear { background-color: #dc3545; }
-        .btn-clear:hover { background-color: #c82333; }
-        .btn-copy { background-color: #007bff; }
-        .btn-copy:hover { background-color: #0056b3; }
+        
+        label { 
+            font-weight: 600; 
+            margin-bottom: 8px; 
+            color: #555; 
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
 
-        .output-group { margin-top: 25px; }
+        /* Gaya untuk input dan select */
+        select, input[type="text"], input[type="date"] {
+            padding: 12px 15px;
+            border: 2px solid transparent; /* Border transparan default */
+            background-color: #f1f3f9; /* Warna latar abu muda */
+            border-radius: 8px;
+            font-size: 15px;
+            width: 100%;
+            transition: all 0.3s ease; /* Transisi halus saat diklik */
+            font-family: inherit;
+        }
+
+        /* Efek saat input diklik (fokus) */
+        select:focus, input:focus {
+            background-color: #fff;
+            border-color: #667eea; /* Warna aksen saat fokus */
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        /* --- Button Styles --- */
+        .button-group { 
+            display: flex; 
+            gap: 12px; 
+            margin-top: 15px; 
+        }
+        button {
+            flex: 1; 
+            padding: 14px; 
+            color: white; 
+            border: none;
+            border-radius: 8px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        /* Efek tekan pada tombol */
+        button:active {
+            transform: translateY(2px);
+        }
+
+        /* Warna dan gradasi tombol */
+        .btn-generate { 
+            background: linear-gradient(to right, #28a745, #20c997); 
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+        .btn-clear { 
+            background: linear-gradient(to right, #dc3545, #f86c6b); 
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+        }
+        .btn-copy { 
+            background: linear-gradient(to right, #007bff, #6610f2); 
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        /* --- Output Area Styles --- */
+        .output-group { margin-top: 30px; border-top: 2px solid #eee; padding-top: 20px;}
         #hasilTeks { 
             width: 100%;
-            height: 380px; 
-            background-color: #fff; 
-            font-family: monospace; 
+            height: 350px; 
+            /* Tema gelap untuk area hasil agar mirip code editor */
+            background-color: #2d3748; 
+            color: #e2e8f0;
+            font-family: 'Fira Code', 'Consolas', monospace; /* Font monospace yang bagus */
             font-size: 14px; 
             padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
             resize: vertical;
-            line-height: 1.5;
+            line-height: 1.6;
         }
+        /* Scrollbar custom untuk textarea hasil (opsional, agar lebih rapi) */
+        #hasilTeks::-webkit-scrollbar { width: 8px; }
+        #hasilTeks::-webkit-scrollbar-track { background: #2d3748; }
+        #hasilTeks::-webkit-scrollbar-thumb { background: #4a5568; border-radius: 4px;}
     </style>
 </head>
 <body onload="sesuaikanForm()">
 
-    <h2>Generator Template Laporan</h2>
+    <div class="main-card">
+        <h2>Generator Template Laporan</h2>
 
-    <div class="form-group">
-        <label for="kategori">Pilih Kategori / Format:</label>
-        <select id="kategori" onchange="sesuaikanForm()">
-            <option value="template1">1. WSA TEKNIS / Kendala Internet</option>
-            <option value="template2">2. WSA NON TEKNIS / Percepatan Permintaan</option>
-            <option value="template3">3. GENERAL</option>
-            <option value="template4">4. NON WSA PROFILING / Edit SR</option>
-            <option value="template5">5. NON WSA BILLING</option>
-            <option value="template6">6. ITSD</option>
-        </select>
-    </div>
+        <div class="form-group">
+            <label for="kategori">Pilih Kategori / Format:</label>
+            <select id="kategori" onchange="sesuaikanForm()">
+                <option value="template1">1. WSA TEKNIS / Kendala Internet</option>
+                <option value="template2">2. WSA NON TEKNIS / Percepatan Permintaan</option>
+                <option value="template3">3. GENERAL</option>
+                <option value="template4">4. NON WSA PROFILING / Edit SR</option>
+                <option value="template5">5. NON WSA BILLING</option>
+                <option value="template6">6. ITSD</option>
+            </select>
+        </div>
 
-    <div class="form-group">
-        <label for="inputPabx">Masukkan Data PABX:</label>
-        <input type="text" id="inputPabx" placeholder="Ketik data PABX di sini...">
-    </div>
+        <div class="form-group">
+            <label for="inputPabx">Masukkan Data PABX:</label>
+            <input type="text" id="inputPabx" placeholder="Ketik data PABX di sini...">
+        </div>
 
-    <div class="form-group" id="grupTanggal">
-        <label for="inputTanggal">Pilih Tanggal Kejadian:</label>
-        <input type="date" id="inputTanggal">
-    </div>
+        <div class="form-group" id="grupTanggal">
+            <label for="inputTanggal">Pilih Tanggal Kejadian:</label>
+            <input type="date" id="inputTanggal">
+        </div>
 
-    <div class="button-group">
-        <button onclick="buatTemplate()" class="btn-generate">Generate Teks</button>
-        <button onclick="clearForm()" class="btn-clear">Clear Data</button>
-    </div>
-
-    <div class="output-group">
-        <label for="hasilTeks">Hasil Template:</label>
-        <textarea id="hasilTeks" readonly placeholder="Hasil format teks akan muncul di sini..."></textarea>
-        
         <div class="button-group">
-            <button onclick="copyTeks()" class="btn-copy">Copy Hasil Teks</button>
+            <button onclick="buatTemplate()" class="btn-generate">Generate Teks</button>
+            <button onclick="clearForm()" class="btn-clear">Clear Data</button>
+        </div>
+
+        <div class="output-group">
+            <label for="hasilTeks">Hasil Template:</label>
+            <textarea id="hasilTeks" readonly placeholder="Hasil format teks akan muncul di sini..."></textarea>
+            
+            <div class="button-group">
+                <button onclick="copyTeks()" class="btn-copy">Copy Hasil Teks</button>
+            </div>
         </div>
     </div>
 
     <script>
+        // --- JAVASCRIPT TIDAK BERUBAH SAMA SEKALI DARI VERSI SEBELUMNYA ---
+
         // Fungsi untuk mengatur tampilan form berdasarkan kategori
         function sesuaikanForm() {
             const kategori = document.getElementById('kategori').value;
