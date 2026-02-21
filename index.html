@@ -3,71 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Template Kerja</title>
+    <title>Generator Tiket PABX</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 40px auto;
+            max-width: 800px;
+            margin: 30px auto;
             padding: 20px;
-            background-color: #f9f9f9;
+            background-color: #f4f7f6;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        h2 { text-align: center; color: #333; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        h2 { text-align: center; color: #333; margin-bottom: 20px; }
+        
+        /* Grid untuk membagi form menjadi 2 kolom agar rapi */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group { display: flex; flex-direction: column; }
+        .form-group.full-width { grid-column: span 2; }
+        
+        label { font-weight: bold; margin-bottom: 5px; color: #555; font-size: 14px; }
         input[type="text"], textarea {
-            width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            box-sizing: border-box;
+            font-size: 14px;
         }
         
-        /* Pengaturan Tombol Bersebelahan */
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
+        .button-group { display: flex; gap: 10px; margin-top: 10px; }
         button {
-            flex: 1;
-            padding: 10px;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: bold;
+            flex: 1; padding: 12px; color: white; border: none;
+            border-radius: 4px; font-size: 16px; cursor: pointer; font-weight: bold;
         }
-        
-        /* Warna Khusus Tiap Tombol */
         .btn-generate { background-color: #28a745; }
         .btn-generate:hover { background-color: #218838; }
-        
         .btn-clear { background-color: #dc3545; }
         .btn-clear:hover { background-color: #c82333; }
-        
         .btn-copy { background-color: #007bff; }
         .btn-copy:hover { background-color: #0056b3; }
 
         .output-group { margin-top: 25px; }
-        #hasilTeks { height: 150px; background-color: #e9ecef; }
+        #hasilTeks { height: 250px; background-color: #fff; font-family: monospace; font-size: 14px; }
     </style>
 </head>
 <body>
 
-    <h2>Form Template Kerja</h2>
+    <h2>Form Laporan PABX / CASE</h2>
 
-    <div class="form-group">
-        <label for="data1">Data 1 (Misal: Nama Klien):</label>
-        <input type="text" id="data1" placeholder="Masukkan data pertama...">
-    </div>
+    <div class="form-grid">
+        <div class="form-group">
+            <label for="pabx">PABX:</label>
+            <input type="text" id="pabx" placeholder="Contoh: PBX-123">
+        </div>
+        <div class="form-group">
+            <label for="case_id">CASE:</label>
+            <input type="text" id="case_id" placeholder="Nomor Case">
+        </div>
+        <div class="form-group">
+            <label for="no_ih">NoIH:</label>
+            <input type="text" id="no_ih" placeholder="Nomor IH">
+        </div>
+        <div class="form-group">
+            <label for="hvc">HVC:</label>
+            <input type="text" id="hvc" placeholder="Status HVC (Ya/Tidak)">
+        </div>
+        <div class="form-group">
+            <label for="nama_pelanggan">Nama Pelanggan:</label>
+            <input type="text" id="nama_pelanggan" placeholder="Nama lengkap">
+        </div>
+        <div class="form-group">
+            <label for="cp">CP (Contact Person):</label>
+            <input type="text" id="cp" placeholder="Nomor HP / Telp">
+        </div>
+        
+        <div class="form-group full-width">
+            <label for="detail_case">Detail Case:</label>
+            <textarea id="detail_case" rows="3" placeholder="Jelaskan detail kendala di sini..."></textarea>
+        </div>
 
-    <div class="form-group">
-        <label for="data2">Data 2 (Misal: Tanggal / Nomor Proyek):</label>
-        <input type="text" id="data2" placeholder="Masukkan data kedua...">
+        <div class="form-group">
+            <label for="lapul_gaul">Lapul/Gaul:</label>
+            <input type="text" id="lapul_gaul" placeholder="Isi Lapul/Gaul">
+        </div>
+        <div class="form-group">
+            <label for="status_dsc">Status Nomor di DSC:</label>
+            <input type="text" id="status_dsc" placeholder="Status di DSC">
+        </div>
+        <div class="form-group">
+            <label for="sub_status">Sub Status:</label>
+            <input type="text" id="sub_status" placeholder="Sub status">
+        </div>
+        <div class="form-group">
+            <label for="status_bayar">Status Pembayaran:</label>
+            <input type="text" id="status_bayar" placeholder="Lunas / Belum Lunas">
+        </div>
+        <div class="form-group">
+            <label for="type_ont">Type ONT:</label>
+            <input type="text" id="type_ont" placeholder="Merek/Tipe ONT">
+        </div>
+        <div class="form-group">
+            <label for="capt_lightshoot">Capt lightshoot:</label>
+            <input type="text" id="capt_lightshoot" placeholder="Link / Info Screenshot">
+        </div>
+        <div class="form-group full-width">
+            <label for="kategori">KATEGORI:</label>
+            <input type="text" id="kategori" placeholder="Kategori gangguan">
+        </div>
     </div>
 
     <div class="button-group">
@@ -77,7 +123,7 @@
 
     <div class="output-group">
         <label for="hasilTeks">Hasil Template:</label>
-        <textarea id="hasilTeks" readonly placeholder="Hasil teks akan muncul di sini..."></textarea>
+        <textarea id="hasilTeks" readonly placeholder="Hasil format teks akan muncul di sini..."></textarea>
         
         <div class="button-group">
             <button onclick="copyTeks()" class="btn-copy">Copy Hasil Teks</button>
@@ -86,59 +132,63 @@
 
     <script>
         function buatTemplate() {
-            const data1 = document.getElementById('data1').value;
-            const data2 = document.getElementById('data2').value;
+            // Mengambil semua nilai dari form
+            const pabx = document.getElementById('pabx').value;
+            const caseId = document.getElementById('case_id').value;
+            const noIh = document.getElementById('no_ih').value;
+            const hvc = document.getElementById('hvc').value;
+            const nama = document.getElementById('nama_pelanggan').value;
+            const cp = document.getElementById('cp').value;
+            const detail = document.getElementById('detail_case').value;
+            const lapulGaul = document.getElementById('lapul_gaul').value;
+            const statusDsc = document.getElementById('status_dsc').value;
+            const subStatus = document.getElementById('sub_status').value;
+            const statusBayar = document.getElementById('status_bayar').value;
+            const typeOnt = document.getElementById('type_ont').value;
+            const capt = document.getElementById('capt_lightshoot').value;
+            const kategori = document.getElementById('kategori').value;
 
-            if(!data1 || !data2) {
-                alert("Harap isi kedua data terlebih dahulu!");
-                return;
-            }
+            // Menyusun format sesuai permintaan
+            const template = `${pabx} / ${caseId}
 
-            const template = `Halo Bapak/Ibu ${data1},
+${pabx} / ${noIh} / ${caseId} / ${hvc}
+Nama Pelanggan : ${nama}
+CP : ${cp}
+Detail case : ${detail}
+Lapul/Gaul : ${lapulGaul}
+Status Nomor di DSC : ${statusDsc}
+Sub Status : ${subStatus}
+Status Pembayaran : ${statusBayar}
+Type ONT : ${typeOnt}
+Capt lightshoot : ${capt}
+KATEGORI : ${kategori}`;
 
-Sesuai dengan pembicaraan kita sebelumnya, berikut adalah dokumen untuk proyek dengan nomor referensi ${data2}. 
-
-Mohon untuk segera ditinjau.
-
-Terima kasih.`;
-
+            // Menampilkan ke kotak hasil
             document.getElementById('hasilTeks').value = template;
         }
 
-        // Fungsi untuk mengosongkan form input
         function clearForm() {
-            document.getElementById('data1').value = '';
-            document.getElementById('data2').value = '';
-            document.getElementById('hasilTeks').value = '';
+            // Mengosongkan semua input
+            const inputs = document.querySelectorAll('input[type="text"], textarea');
+            inputs.forEach(input => input.value = '');
             
-            // Kembalikan kursor ke input pertama
-            document.getElementById('data1').focus();
+            // Kembalikan kursor ke input PABX
+            document.getElementById('pabx').focus();
         }
 
-        // Fungsi untuk menyalin teks ke clipboard
         function copyTeks() {
             const teks = document.getElementById('hasilTeks');
-            
             if(!teks.value) {
-                alert("Belum ada teks yang bisa dicopy! Generate teks terlebih dahulu.");
+                alert("Belum ada teks yang bisa dicopy!");
                 return;
             }
-
-            // Memilih teks di dalam textarea
             teks.select();
-            teks.setSelectionRange(0, 99999); // Untuk dukungan di perangkat mobile
-
-            // Menyalin teks menggunakan API Clipboard modern
+            teks.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(teks.value)
-                .then(() => {
-                    alert("Teks berhasil disalin ke clipboard!");
-                })
-                .catch(err => {
-                    alert("Gagal menyalin teks. Silakan copy manual.");
-                });
+                .then(() => alert("Teks berhasil disalin!"))
+                .catch(err => alert("Gagal menyalin teks."));
         }
     </script>
 
 </body>
 </html>
-
