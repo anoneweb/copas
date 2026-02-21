@@ -10,12 +10,10 @@
             box-sizing: border-box;
         }
         body {
-            /* Menggunakan font system yang lebih modern */
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 20px;
             min-height: 100vh;
-            /* Latar belakang gradasi modern */
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             justify-content: center;
@@ -26,7 +24,6 @@
         .main-card {
             width: 100%;
             max-width: 700px;
-            /* Efek kartu putih agak transparan (Glassmorphism subtle) */
             background-color: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             padding: 30px;
@@ -57,22 +54,20 @@
             letter-spacing: 0.5px;
         }
 
-        /* Gaya untuk input dan select */
         select, input[type="text"], input[type="date"] {
             padding: 12px 15px;
-            border: 2px solid transparent; /* Border transparan default */
-            background-color: #f1f3f9; /* Warna latar abu muda */
+            border: 2px solid transparent; 
+            background-color: #f1f3f9; 
             border-radius: 8px;
             font-size: 15px;
             width: 100%;
-            transition: all 0.3s ease; /* Transisi halus saat diklik */
+            transition: all 0.3s ease; 
             font-family: inherit;
         }
 
-        /* Efek saat input diklik (fokus) */
         select:focus, input:focus {
             background-color: #fff;
-            border-color: #667eea; /* Warna aksen saat fokus */
+            border-color: #667eea; 
             outline: none;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
@@ -95,12 +90,10 @@
             letter-spacing: 0.5px;
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        /* Efek tekan pada tombol */
         button:active {
             transform: translateY(2px);
         }
 
-        /* Warna dan gradasi tombol */
         .btn-generate { 
             background: linear-gradient(to right, #28a745, #20c997); 
             box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
@@ -119,10 +112,9 @@
         #hasilTeks { 
             width: 100%;
             height: 350px; 
-            /* Tema gelap untuk area hasil agar mirip code editor */
             background-color: #2d3748; 
             color: #e2e8f0;
-            font-family: 'Fira Code', 'Consolas', monospace; /* Font monospace yang bagus */
+            font-family: 'Fira Code', 'Consolas', monospace; 
             font-size: 14px; 
             padding: 15px;
             border: 1px solid #4a5568;
@@ -130,7 +122,6 @@
             resize: vertical;
             line-height: 1.6;
         }
-        /* Scrollbar custom untuk textarea hasil (opsional, agar lebih rapi) */
         #hasilTeks::-webkit-scrollbar { width: 8px; }
         #hasilTeks::-webkit-scrollbar-track { background: #2d3748; }
         #hasilTeks::-webkit-scrollbar-thumb { background: #4a5568; border-radius: 4px;}
@@ -179,8 +170,6 @@
     </div>
 
     <script>
-        // --- JAVASCRIPT TIDAK BERUBAH SAMA SEKALI DARI VERSI SEBELUMNYA ---
-
         // Fungsi untuk mengatur tampilan form berdasarkan kategori
         function sesuaikanForm() {
             const kategori = document.getElementById('kategori').value;
@@ -210,8 +199,18 @@
             const pabx = document.getElementById('inputPabx').value;
             const tanggalRaw = document.getElementById('inputTanggal').value;
 
+            // 1. Validasi PABX
             if(!pabx) {
                 alert("Harap isi data PABX terlebih dahulu!");
+                document.getElementById('inputPabx').focus();
+                return;
+            }
+
+            // 2. Validasi Tanggal (Hanya jika template membutuhkan tanggal)
+            const butuhTanggal = ['template2', 'template3', 'template5', 'template6'];
+            if (butuhTanggal.includes(kategori) && !tanggalRaw) {
+                alert("Harap isi Tanggal Kejadian terlebih dahulu!");
+                document.getElementById('inputTanggal').focus();
                 return;
             }
 
