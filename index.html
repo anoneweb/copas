@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Template Kerja</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h2 { text-align: center; color: #333; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        /* Pengaturan Tombol Bersebelahan */
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        button {
+            flex: 1;
+            padding: 10px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        /* Warna Khusus Tiap Tombol */
+        .btn-generate { background-color: #28a745; }
+        .btn-generate:hover { background-color: #218838; }
+        
+        .btn-clear { background-color: #dc3545; }
+        .btn-clear:hover { background-color: #c82333; }
+        
+        .btn-copy { background-color: #007bff; }
+        .btn-copy:hover { background-color: #0056b3; }
+
+        .output-group { margin-top: 25px; }
+        #hasilTeks { height: 150px; background-color: #e9ecef; }
+    </style>
+</head>
+<body>
+
+    <h2>Form Template Kerja</h2>
+
+    <div class="form-group">
+        <label for="data1">Data 1 (Misal: Nama Klien):</label>
+        <input type="text" id="data1" placeholder="Masukkan data pertama...">
+    </div>
+
+    <div class="form-group">
+        <label for="data2">Data 2 (Misal: Tanggal / Nomor Proyek):</label>
+        <input type="text" id="data2" placeholder="Masukkan data kedua...">
+    </div>
+
+    <div class="button-group">
+        <button onclick="buatTemplate()" class="btn-generate">Generate Teks</button>
+        <button onclick="clearForm()" class="btn-clear">Clear Data</button>
+    </div>
+
+    <div class="output-group">
+        <label for="hasilTeks">Hasil Template:</label>
+        <textarea id="hasilTeks" readonly placeholder="Hasil teks akan muncul di sini..."></textarea>
+        
+        <div class="button-group">
+            <button onclick="copyTeks()" class="btn-copy">Copy Hasil Teks</button>
+        </div>
+    </div>
+
+    <script>
+        function buatTemplate() {
+            const data1 = document.getElementById('data1').value;
+            const data2 = document.getElementById('data2').value;
+
+            if(!data1 || !data2) {
+                alert("Harap isi kedua data terlebih dahulu!");
+                return;
+            }
+
+            const template = `Halo Bapak/Ibu ${data1},
+
+Sesuai dengan pembicaraan kita sebelumnya, berikut adalah dokumen untuk proyek dengan nomor referensi ${data2}. 
+
+Mohon untuk segera ditinjau.
+
+Terima kasih.`;
+
+            document.getElementById('hasilTeks').value = template;
+        }
+
+        // Fungsi untuk mengosongkan form input
+        function clearForm() {
+            document.getElementById('data1').value = '';
+            document.getElementById('data2').value = '';
+            document.getElementById('hasilTeks').value = '';
+            
+            // Kembalikan kursor ke input pertama
+            document.getElementById('data1').focus();
+        }
+
+        // Fungsi untuk menyalin teks ke clipboard
+        function copyTeks() {
+            const teks = document.getElementById('hasilTeks');
+            
+            if(!teks.value) {
+                alert("Belum ada teks yang bisa dicopy! Generate teks terlebih dahulu.");
+                return;
+            }
+
+            // Memilih teks di dalam textarea
+            teks.select();
+            teks.setSelectionRange(0, 99999); // Untuk dukungan di perangkat mobile
+
+            // Menyalin teks menggunakan API Clipboard modern
+            navigator.clipboard.writeText(teks.value)
+                .then(() => {
+                    alert("Teks berhasil disalin ke clipboard!");
+                })
+                .catch(err => {
+                    alert("Gagal menyalin teks. Silakan copy manual.");
+                });
+        }
+    </script>
+
+</body>
+</html>
+
