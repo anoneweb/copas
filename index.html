@@ -141,6 +141,9 @@
                 <option value="template4">4. NON WSA PROFILING / Edit SR</option>
                 <option value="template5">5. NON WSA BILLING</option>
                 <option value="template6">6. ITSD</option>
+                <option value="template7">7. Mobile Reguler</option>
+                <option value="template8">8. Mobile Network</option>
+                <option value="template9">9. Non Numbering / Kabel Terjuntai</option>
             </select>
         </div>
 
@@ -318,6 +321,59 @@ Tanggal Kejadian: ${tanggalFormatted}
 Kendala/inti gangguan : 
 Capture Error : 
 Dear rekan IT Service Desk mohon bantu`;
+
+            } else if (kategori === 'template7') {
+                template = `REG/INT/CORP SILVER/DIAMOND/PLATINUM
+Nama Customer : 
+MSISDN-A Yang Menghubungi : ${pabx}
+MSISDN-B Yang Bermasalah : 
+Tanggal / Jam Kejadian : 
+Lokasi Pelanggan (alamat) : 
+Segmentasi Kartu : 
+SIM Capability : 
+Customer Tier Pelanggan : 
+Case Owner : Call Center Semarang
+Detail Complaint : 
+Additional Information : 
+Solusi yang telah diberikan : `;
+
+            } else if (kategori === 'template8') {
+                template = `REG/INT/CORP SILVER/DIAMOND/PLATINUM
+Nama Customer : 
+MSISDN-A Yang Menghubungi : ${pabx}
+MSISDN-B Yang Bermasalah : 
+Tanggal / Jam Kejadian : 
+Lokasi Pelanggan (alamat) : 
+Koordinat customer : 
+Segmentasi Kartu : 
+SIM Capability : 
+Customer Tier Pelanggan : 
+Case Owner : Call Center Semarang
+Detail Complaint : 
+Additional Information : 
+Capture bukti pelanggan : 
+Capture CCA : 
+Hasil analisa CCA : 
+Possible root Cause : 
+Remarks : 
+Suggestion : 
+Solusi yang telah diberikan : `;
+
+            } else if (kategori === 'template9') {
+                template = `${pabx} / CASE
+
+Pelapor : 
+Email : 
+CP : 
+#LocationIncident
+Provinsi : 
+Kota / Kab : 
+Kecamatan : 
+Kelurahan : 
+Witel : 
+Nama Jalan : 
+Patokan : 
+Deskripsi : `;
             }
 
             document.getElementById('hasilTeks').value = template;
