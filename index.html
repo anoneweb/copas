@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Copas! v2.0</title>
+    <title>Copas!</title>
     <style>
         /* --- CSS Variables (Sistem Tema Terang & Gelap) --- */
         :root {
@@ -263,7 +263,7 @@
         
         <div class="header-container">
             <h2>Welcome, </h2>
-            <button class="theme-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Ganti Tema">ðŸŒ™</button>
+            <button class="theme-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Ganti Tema">🌙</button>
         </div>
 
         <div class="tab-menu">
@@ -291,8 +291,8 @@
             </div>
 
             <div class="form-group">
-                <label for="inputPabx">Masukkan Data PABX:</label>
-                <input type="text" id="inputPabx" placeholder="">
+                <label for="inputPabx">Masukkan Data PABX / MSISDN-A:</label>
+                <input type="text" id="inputPabx" placeholder="Contoh: 081234567890">
             </div>
 
             <div class="form-group" id="grupTanggal">
@@ -349,7 +349,7 @@
             
             <div class="running-text-container">
                 <div class="running-text">
-                    âš ï¸ HATI-HATI SAAT PENYAMPAIAN TAGIHAN, GUNAKAN KATA: KISARAN / KURANG LEBIH / KIRA-KIRA / SEKITAR / DSB âš ï¸
+                    ⚠️ HATI-HATI SAAT PENYAMPAIAN TAGIHAN, GUNAKAN KATA: KISARAN / KURANG LEBIH / KIRA-KIRA / SEKITAR / DSB ⚠️
                 </div>
             </div>
 
@@ -428,7 +428,7 @@
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
-                document.getElementById('themeToggleBtn').innerText = 'â˜€ï¸';
+                document.getElementById('themeToggleBtn').innerText = '☀️';
             }
         }
 
@@ -439,11 +439,11 @@
             if (htmlTag.getAttribute('data-theme') === 'dark') {
                 htmlTag.removeAttribute('data-theme');
                 localStorage.setItem('theme', 'light');
-                btn.innerText = 'ðŸŒ™';
+                btn.innerText = '🌙';
             } else {
                 htmlTag.setAttribute('data-theme', 'dark');
                 localStorage.setItem('theme', 'dark');
-                btn.innerText = 'â˜€ï¸';
+                btn.innerText = '☀️';
             }
         }
 
